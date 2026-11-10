@@ -30,7 +30,14 @@ bank.fints_url # => "https://fints.dkb.de/fints" (nil if the bank has no FinTS P
 ```
 
 The data comes from [hbci4java](https://github.com/hbci4j/hbci4java)'s `blz.properties` (LGPL-2.1,
-see `data/LICENSE-blz.txt`). Refresh it with `rake banks:update`.
+see `data/LICENSE-blz.txt`). Refresh it with `rake banks:update`, and read the diff before committing:
+apps send PINs to these URLs, so a changed `fints_url` deserves a second look.
+
+### Python dependencies
+
+`fints_bridge.py` declares its dependencies inline, with `exclude-newer` in its `[tool.uv]` header: uv only
+installs package versions published before that date, so a build never picks up a release nobody has looked at.
+To take newer versions, move the date forward on purpose and run the tests.
 
 ### Tests in your app
 

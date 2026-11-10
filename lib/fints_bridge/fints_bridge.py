@@ -1,6 +1,9 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["fints>=4,<5"]
+#
+# [tool.uv]
+# exclude-newer = "2026-10-27T00:00:00Z"
 # ///
 """Fetch one account's transactions via FinTS (PIN/TAN with approval in the banking app).
 

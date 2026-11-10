@@ -31,6 +31,13 @@ class FintsBridgeTest < Minitest::Test
     assert_equal "Login failed: PIN wrong", error.message
   end
 
+  def test_refuses_a_url_without_https
+    error = assert_raises(FintsBridge::Error) do
+      FintsBridge.new(url: "http://fints.example", blz: "1", login: "me", pin: "1", iban: "DE1", product_id: "X")
+    end
+    assert_equal "The FinTS URL must start with https://", error.message
+  end
+
   def test_find_bank_by_blz_iban_or_bic
     dkb = FintsBridge::Bank.find("12030000")
     assert_equal "BYLADEM1001", dkb.bic

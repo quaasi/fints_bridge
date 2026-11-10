@@ -29,6 +29,9 @@ class FintsBridge
   self.command = [ "uv", "run", "--quiet", "--script", SCRIPT ].freeze
 
   def initialize(url:, blz:, login:, pin:, iban:, product_id:, logger: nil)
+    # Login and PIN go to this URL; never send them unencrypted.
+    raise Error, "The FinTS URL must start with https://" unless url.to_s.match?(%r{\Ahttps://}i)
+
     @credentials = { url: url, blz: blz, login: login, pin: pin, iban: iban, product_id: product_id }
     @logger = logger
   end
